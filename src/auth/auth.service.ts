@@ -9,21 +9,21 @@ export class AuthService {
     constructor(private userService: UserService, private jwtService: JwtService) {}
     async login(dto: LoginDto) {
         const user = await this.validateUser(dto);
-        const payload = { email: user.email, sub:{
-            id: user.id,
+        const payload = { email: user.email,
+            sub: user.id,
             name: user.name,
-        } };
+         };
 
         return {
             user,
             backendTokens: {
-                accessToken: this.jwtService.sign(payload, {
+                accessToken: await this.jwtService.sign(payload, {
                     expiresIn: '1h',
-                    secret: process.env.jwtSecretkey,
+                    secret: process.env.JWT_SECRET,
                 }),
-                refreshToken: this.jwtService.sign(payload, {
+                refreshToken: await this.jwtService.sign(payload, {
                     expiresIn: '7d',
-                    secret: process.env.jwtRefreshTokenKey,
+                    secret: process.env.JWT_SECRET,
                 }),
             }
         };
@@ -32,7 +32,7 @@ export class AuthService {
     async validateUser(dto: LoginDto) {
         const user = await this.userService.findbyEmail(dto.email);
 
-        if (user && compare(dto.password, user.password)) {
+        if (user && await compare(dto.password, user.password)) {
             const { password, ...result } = user;
             return result;
         }

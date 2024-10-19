@@ -17,13 +17,13 @@ export class AuthService {
         return {
             user,
             backendTokens: {
-                accessToken: await this.jwtService.sign(payload, {
+                accessToken: await this.jwtService.signAsync(payload, {
                     expiresIn: '1h',
                     secret: process.env.JWT_SECRET,
                 }),
-                refreshToken: await this.jwtService.sign(payload, {
+                refreshToken: await this.jwtService.signAsync(payload, {
                     expiresIn: '7d',
-                    secret: process.env.JWT_SECRET,
+                    secret: process.env.JWT_REFRESH_KEY,
                 }),
             }
         };
@@ -38,5 +38,24 @@ export class AuthService {
         }
 
         throw new UnauthorizedException('Invalid credentials');
+    }
+
+    async refreshToken(user: any) {
+        const payload = { 
+            email: user.email,
+            sub: user.id,
+            name: user.name,
+         };
+
+         return{
+            accessToken: await this.jwtService.signAsync(payload, {
+                expiresIn: '1h',
+                secret: process.env.JWT_SECRET,
+            }),
+            refreshToken: await this.jwtService.signAsync(payload, {
+                expiresIn: '7d',
+                secret: process.env.JWT_REFRESH_KEY,
+            }),
+         }
     }
 }

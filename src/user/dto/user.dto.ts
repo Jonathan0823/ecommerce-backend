@@ -22,5 +22,9 @@ export class UpdateUserDto {
 
     @IsString()
     @IsOptional()
+    image: string;
+
+    @IsString()
+    @IsOptional()
     password: string;
 }

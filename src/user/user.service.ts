@@ -39,6 +39,7 @@ export class UserService {
             data: {
                 ...updateUserDto,
                 password: hashedPassword || undefined,
+                address: updateUserDto.address ? JSON.stringify(updateUserDto.address) : undefined,
             },
         });
     }

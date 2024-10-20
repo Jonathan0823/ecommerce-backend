@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { hash } from 'bcrypt';
 @Injectable()
 export class UserService {
@@ -25,6 +25,22 @@ export class UserService {
 
         const {password, ...result} = newUser;
         return result;
+    }
+
+    async updateUserProfile(id: string, updateUserDto: UpdateUserDto) {
+        if (!updateUserDto) {
+            throw new Error('No data provided for update');
+        }
+
+        const hashedPassword = updateUserDto.password ? await hash(updateUserDto.password, 10) : undefined;
+
+        return this.prisma.user.update({
+            where: { id },
+            data: {
+                ...updateUserDto,
+                password: hashedPassword || undefined,
+            },
+        });
     }
 
     async findbyEmail(email: string){

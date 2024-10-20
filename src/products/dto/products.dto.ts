@@ -7,7 +7,7 @@ export class CreateProductDto {
     @IsArray()
     @ArrayNotEmpty()
     @IsString({ each: true })
-    images: string[];
+    image: string[];
 
     @IsString()
     thumbnail: string;

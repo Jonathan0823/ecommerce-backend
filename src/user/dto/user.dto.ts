@@ -11,30 +11,6 @@ export class CreateUserDto{
     @IsString()
     password: string;
 }
-
-export class UpdateUserDto {
-    @IsString()
-    @IsOptional()
-    name: string;
-
-    @IsEmail()
-    @IsOptional()
-    email: string;
-
-    @IsString()
-    @IsOptional()
-    image: string;
-
-    @IsString()
-    @IsOptional()
-    password: string;
-
-    @ValidateNested()
-    @Type(() => UpdateAddressDto)
-    @IsOptional()
-    address?: UpdateAddressDto;
-}
-
 export class UpdateAddressDto {
     @IsString()
     @IsOptional()
@@ -68,3 +44,27 @@ export class UpdateAddressDto {
     @IsOptional()
     zipCode?: string;
 }
+
+export class UpdateUserDto {
+    @IsString()
+    @IsOptional()
+    name: string;
+
+    @IsEmail()
+    @IsOptional()
+    email: string;
+
+    @IsString()
+    @IsOptional()
+    image: string;
+
+    @IsString()
+    @IsOptional()
+    password: string;
+
+    @ValidateNested()
+    @Type(() => UpdateAddressDto)
+    @IsOptional()
+    address?: UpdateAddressDto;
+}
+

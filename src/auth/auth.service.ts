@@ -12,7 +12,6 @@ export class AuthService {
         const user = await this.validateUser(dto);
         const payload = { email: user.email,
             sub: user.id,
-            name: user.name,
          };
 
         return {
@@ -46,7 +45,6 @@ export class AuthService {
         const payload = { 
             email: user.email,
             sub: user.id,
-            name: user.name,
          };
 
          return{

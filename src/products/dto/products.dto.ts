@@ -13,7 +13,7 @@ export class CreateProductDto {
     thumbnail: string;
 
     @IsString()
-    category: string;
+    categoryName: string;
 
     @IsString()
     brand: string;

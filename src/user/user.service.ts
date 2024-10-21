@@ -27,12 +27,16 @@ export class UserService {
         return result;
     }
 
-    async updateUserProfile(id: string, updateUserDto: UpdateUserDto) {
+    async updateUserProfile(id: string, updateUserDto: UpdateUserDto, isAdmin: boolean) {
         if (!updateUserDto) {
             throw new Error('No data provided for update');
         }
 
         const hashedPassword = updateUserDto.password ? await hash(updateUserDto.password, 10) : undefined;
+
+        if(!isAdmin){
+            delete updateUserDto.isAdmin;
+        }
 
         return this.prisma.user.update({
             where: { id },

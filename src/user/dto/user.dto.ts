@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsEmail, IsOptional, isString, IsString, ValidateNested } from "class-validator";
+import { IsBoolean, IsEmail, IsOptional, isString, IsString, ValidateNested } from "class-validator";
 
 export class CreateUserDto{
     @IsString()
@@ -66,5 +66,9 @@ export class UpdateUserDto {
     @Type(() => UpdateAddressDto)
     @IsOptional()
     address?: UpdateAddressDto;
+
+    @IsBoolean()
+    @IsOptional()
+    isAdmin: boolean;
 }
 

@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { AddCartItemDto, UpdateCartItemDto } from './dto/carts.dto';
 

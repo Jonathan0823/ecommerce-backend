@@ -24,6 +24,6 @@ import { CartsModule } from './carts/carts.module';
 @Module({
   imports: [ConfigModule.forRoot(), UserModule, AuthModule, ProductsModule, CategoriesModule, OrdersModule, CartsModule],
   controllers: [AppController, CategoriesController, UserController, ProductsController, OrdersController, CartsController],
-  providers: [AppService, PrismaService, CategoriesService, JwtService, UserService, , OrdersService, CartsService],
+  providers: [AppService, PrismaService, CategoriesService, JwtService, UserService, , OrdersService, CartsService, ProductsService],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateCategoryDto } from './dto/categories.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from './dto/categories.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -44,6 +44,25 @@ export class CategoriesService {
             throw new HttpException({
                 status: HttpStatus.INTERNAL_SERVER_ERROR,
                 error: 'Failed to delete category',
+            }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async updateCategory(dto: UpdateCategoryDto){
+        try{
+            return await this.prismaService.category.update({
+                where: {
+                    id: dto.id,
+                },
+                data: {
+                    name: dto.name,
+                },
+            });
+        }
+        catch (error) {
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: 'Failed to update category',
             }, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

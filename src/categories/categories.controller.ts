@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { AdminGuard } from 'src/auth/guards/admin.guard';
-import { UpdateCategoryDto } from './dto/categories.dto';
 
 @Controller('categories')
 export class CategoriesController {

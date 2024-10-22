@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateOrderDto } from './dto/orders.dto';
 
@@ -11,7 +11,7 @@ export class OrdersService {
           include: {
             orderItems: {
               include: {
-                product: true, // Include product details if needed
+                product: true,
               },
             },
           },
@@ -34,16 +34,13 @@ export class OrdersService {
       async createOrder(userId: string, createOrderDto: CreateOrderDto) {
         const { items, total } = createOrderDto;
     
-        // Create the order
         const order = await this.prismaService.order.create({
           data: {
             userId,
             total,
-            status: 'pending', // Set initial status
           },
         });
     
-        // Create order items
         for (const item of items) {
           await this.prismaService.orderItem.create({
             data: {
@@ -56,5 +53,23 @@ export class OrdersService {
         }
     
         return order;
+      }
+
+      async updateOrderStatus(orderId: string, status: string) {
+    
+        const order = await this.prismaService.order.findUnique({
+          where: { id: orderId },
+        });
+    
+        if (!order) {
+          throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
+        }
+    
+        return this.prismaService.order.update({
+          where: { id: orderId },
+          data: { 
+            status: status
+           },
+        });
       }
 }

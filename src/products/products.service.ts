@@ -40,4 +40,14 @@ export class ProductsService {
             },
         });
     }
+
+    async getProductsByCategories(categories: string[]) {
+        return await this.prismaservice.product.findMany({
+          where: {
+            categoryName: {
+              in: categories,
+            },
+          },
+        });
+      }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { AdminGuard } from 'src/auth/guards/admin.guard';
 
@@ -9,6 +9,12 @@ export class ProductsController {
     @Get()
     async getProducts() {
         return await this.productsService.getProducts();
+    }
+
+    @Get('category')
+    async getProductsByCategories(@Query('categories') categories: string) {
+      const categoryList = categories.split(',');
+      return await this.productsService.getProductsByCategories(categoryList);
     }
 
     @UseGuards(AdminGuard)

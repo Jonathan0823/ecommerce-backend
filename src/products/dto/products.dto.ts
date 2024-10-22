@@ -4,13 +4,8 @@ export class CreateProductDto {
     @IsString()
     name: string;
 
-    @IsArray()
-    @ArrayNotEmpty()
-    @IsString({ each: true })
-    image: string[];
-
     @IsString()
-    thumbnail: string;
+    image: string;
 
     @IsString()
     categoryName: string;

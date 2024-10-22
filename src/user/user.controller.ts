@@ -2,10 +2,17 @@ import { Body, Controller, Get, Param, Patch, Request, UnauthorizedException, Us
 import { UserService } from './user.service';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { UpdateUserDto } from './dto/user.dto';
+import { AdminGuard } from 'src/auth/guards/admin.guard';
 
 @Controller('user')
 export class UserController {
     constructor(private userService: UserService) {}
+
+    @UseGuards(AdminGuard)
+    @Get()
+    async getAllUsers() {
+        return await this.userService.findAll();
+    }
 
     @UseGuards(JwtGuard)
     @Get(":id")

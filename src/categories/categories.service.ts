@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateCategoryDto } from './dto/categories.dto';
 
@@ -11,7 +11,10 @@ export class CategoriesService {
             return await this.prismaService.category.findMany();
         }
         catch (error) {
-            throw new Error(error);
+            throw new HttpException({
+                status: HttpStatus.BAD_REQUEST,
+                error: 'This is a custom error message',
+            }, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -23,7 +26,10 @@ export class CategoriesService {
                 },
             });
         } catch (error) {
-            throw new Error(error);
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: 'Failed to fetch categories',
+            }, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

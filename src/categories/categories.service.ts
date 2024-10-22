@@ -32,4 +32,19 @@ export class CategoriesService {
             }, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    async deleteCategory(id: string){
+        try{
+            return await this.prismaService.category.delete({
+                where: {
+                    id: id,
+                },
+            });
+        } catch (error) {
+            throw new HttpException({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error: 'Failed to delete category',
+            }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

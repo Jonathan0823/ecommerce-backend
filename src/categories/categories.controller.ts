@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { AdminGuard } from 'src/auth/guards/admin.guard';
 
@@ -15,5 +15,11 @@ export class CategoriesController {
     @Post("create")
     async createCategory(@Body() CreateCategoryDto) {
         return await this.categoryService.createCategory(CreateCategoryDto);
+    }
+
+    @UseGuards(AdminGuard)
+    @Delete("delete")
+    async deleteCategory(@Body("id") id: string) {
+        return await this.categoryService.deleteCategory(id);
     }
 }

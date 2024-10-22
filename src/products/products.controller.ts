@@ -32,7 +32,7 @@ export class ProductsController {
     return await this.productsService.getProducts(limitInt, pageInt);
   }
 
-  @Get('category')
+  @Get('category/search')
   async getProductsByCategories(@Query('categories') categories: string) {
     const categoryList = categories.split(',');
     return await this.productsService.getProductsByCategories(categoryList);

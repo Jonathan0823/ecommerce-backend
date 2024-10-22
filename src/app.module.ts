@@ -20,6 +20,9 @@ import { CartsService } from './carts/carts.service';
 import { ProductsService } from './products/products.service';
 import { OrdersModule } from './orders/orders.module';
 import { CartsModule } from './carts/carts.module';
+import { BannersController } from './banners/banners.controller';
+import { BannersModule } from './banners/banners.module';
+import { BannersService } from './banners/banners.service';
 
 @Module({
   imports: [
@@ -30,6 +33,7 @@ import { CartsModule } from './carts/carts.module';
     ProductsModule,
     OrdersModule,
     CartsModule,
+    BannersModule,
   ],
   controllers: [
     AppController,
@@ -38,6 +42,7 @@ import { CartsModule } from './carts/carts.module';
     ProductsController,
     OrdersController,
     CartsController,
+    BannersController,
   ],
   providers: [
     AppService,
@@ -48,6 +53,7 @@ import { CartsModule } from './carts/carts.module';
     UserService,
     OrdersService,
     CartsService,
+    BannersService,
   ],
 })
 export class AppModule {}

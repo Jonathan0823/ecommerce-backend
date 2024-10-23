@@ -13,10 +13,14 @@ export class ProductsService {
       },
     });
   }
+  
+  async getTotalProductsCount() {
+    return this.prismaservice.product.count();
+  }
 
   async getProducts(limit: number, page: number) {
-    const take = limit || 10; // Default limit to 10 if not provided
-    const skip = page ? (page - 1) * take : 0; // Calculate the number of items to skip
+    const take = limit || 10; 
+    const skip = page ? (page - 1) * take : 0; 
     return this.prismaservice.product.findMany({
       take,
       skip,

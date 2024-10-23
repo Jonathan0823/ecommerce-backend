@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -29,7 +28,19 @@ export class ProductsController {
   ) {
     const limitInt = parseInt(limit, 10);
     const pageInt = parseInt(page, 10);
-    return await this.productsService.getProducts(limitInt, pageInt);
+    const [products, totalCount] = await Promise.all([
+      this.productsService.getProducts(limitInt, pageInt),
+      this.productsService.getTotalProductsCount(),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / limitInt);
+
+    return {
+      products,
+      totalPages,
+      currentPage: pageInt,
+      totalCount,
+    };
   }
 
   @Get('category/search')

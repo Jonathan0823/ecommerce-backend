@@ -68,12 +68,12 @@ export class ProductsService {
     });
   }
 
-  async searchProducts(keyword: string) {
+  async searchProducts(key: string) {
     return this.prismaservice.product.findMany({
       where: {
-        AND: [
-          { name: { contains: keyword, mode: 'insensitive' } },
-          { brand: { contains: keyword, mode: 'insensitive' } },
+        OR: [
+          { name: { contains: key, mode: 'insensitive' } },
+          { brand: { contains: key, mode: 'insensitive' } },
         ],
       },
     });

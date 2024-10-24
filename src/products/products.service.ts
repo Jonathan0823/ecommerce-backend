@@ -67,4 +67,15 @@ export class ProductsService {
       },
     });
   }
+
+  async searchProducts(keyword: string) {
+    return this.prismaservice.product.findMany({
+      where: {
+        AND: [
+          { name: { contains: keyword, mode: 'insensitive' } },
+          { brand: { contains: keyword, mode: 'insensitive' } },
+        ],
+      },
+    });
+  }
 }

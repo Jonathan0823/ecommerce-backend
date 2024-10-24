@@ -66,4 +66,9 @@ export class ProductsController {
   async updateProduct(@Body() UpdateProductDto) {
     return await this.productsService.updateProduct(UpdateProductDto);
   }
+
+  @Get('search')
+  async searchProducts(@Query('keyword') keyword: string) {
+    return await this.productsService.searchProducts(keyword);
+  }
 }

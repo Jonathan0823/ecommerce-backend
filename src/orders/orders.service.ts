@@ -9,6 +9,7 @@ export class OrdersService {
     async getAllOrders() {
         return this.prismaService.order.findMany({
           include: {
+            user: true,
             orderItems: {
               include: {
                 product: true,

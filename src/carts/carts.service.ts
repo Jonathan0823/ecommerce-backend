@@ -135,4 +135,22 @@ export class CartsService {
       },
     });
   }
+
+  async clearCart(userId: string) {
+    const cart = await this.prismaService.cart.findFirst({
+      where: {
+        userId: userId,
+      },
+    });
+
+    if (!cart) {
+      throw new HttpException('Cart not found', HttpStatus.NOT_FOUND);
+    }
+
+    return this.prismaService.cartItem.deleteMany({
+      where: {
+        cartId: cart.id,
+      },
+    });
+  }
 }

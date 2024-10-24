@@ -39,4 +39,10 @@ export class CartsController {
   ) {
     return this.cartService.removeItemFromCart(userId, productId);
   }
+
+  @UseGuards(JwtGuard)
+  @Delete(':userId/items')
+  async clearCart(@Param('userId') userId: string) {
+    return this.cartService.clearCart(userId);
+  }
 }
